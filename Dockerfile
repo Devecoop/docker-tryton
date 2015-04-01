@@ -1,42 +1,20 @@
-# Trytond 3.2
+# Trytond 3.2 with Sale module and Postgres
 #
-# VERSION	3.2.1.0
+# VERSION	3.2.0.1
 
-FROM ubuntu:14.04
-MAINTAINER Sharoon Thomas <sharoon.thomas@openlabs.co.in>
+FROM devecoop/tryton-base:3.2
+MAINTAINER Germán Podestá <german.podesta@devecoop.com>
 
-# Update package repository
-RUN apt-get update
+# Setup psycopg2 since you want to connect to postgres
+# database
+RUN apt-get -y -q install python-dev libpq-dev
+RUN pip install psycopg2
 
-# Setup environment and UTF-8 locale
-ENV DEBIAN_FRONTEND noninteractive
-ENV LANGUAGE en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
+# Setup the sale module since it is a required for this
+# custom setup
+RUN pip install 'trytond_sale>=3.2,<3.3'
 
-# Install setuptools to install pip
-RUN apt-get -y -q install python-setuptools
-# setuptools sucks! install pip
-RUN easy_install pip
-
-# Install latest trytond in 3.2.x series
-RUN apt-get -y -q install python-lxml
-RUN pip install 'trytond>=3.2.4,<3.3'
-
-# Copy trytond.conf from local folder to /etc/trytond.conf
+# Copy new trytond.conf from local folder to /etc/trytond.conf
+# The new trytond also has credentials to connect to the postgres
+# server which is accessible elsewhere
 ADD trytond.conf /etc/trytond.conf
-
-# Create an empty folder for tryton data store
-RUN mkdir -p /var/lib/trytond
-
-# Intiialise the database
-RUN echo admin > /.trytonpassfile
-ENV TRYTONPASSFILE /.trytonpassfile
-
-# Install packages for openoffice reporting
-# libreoffice gets installed as it's a requirement of unoconv
-RUN apt-get -y -q install unoconv
-
-EXPOSE 	8000
-CMD ["-c", "/etc/trytond.conf", "-v"]
-ENTRYPOINT ["/usr/local/bin/trytond"]
