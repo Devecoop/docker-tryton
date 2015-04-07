@@ -1,0 +1,39 @@
+#!/bin/sh
+
+DOCKER=docker
+
+TRYTON_DOCKER_DIR=/opt/tryton
+TRYTON_PROJECT_DIR="$(pwd)"
+
+source env_vars
+
+trun(){
+    case "$1" in
+	build)
+	    $DOCKER build -t $TRYTON_IMAGE $TRYTON_PROJECT_DIR
+	    ;;
+
+	create)
+	    $DOCKER inspect $POSTGRES_CONTAINER > /dev/null
+	    ## Create Postgresql container if not exists
+	    if [ ! $? ]; then
+		$DOCKER run --name $POSTGRES_CONTAINER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
+		    -e POSTGRES_USER=POSTGRES_USER -d $POSTGRES_IMAGE
+		echo "Created Postgres container: ==$POSTGRES_CONTAINER=="
+	    else
+		$DOCKER start $POSTGRES_CONTAINER > /dev/null
+		echo "Started Postgres container: ==$POSTGRES_CONTAINER=="
+	    fi
+
+	    ## Create the tryton container
+	    $DOCKER run --name $TRYTON_CONTAINER -p 8000:8000 \
+		--link $POSTGRES_CONTAINER:$POSTGRES_SERVER_URL \
+		-d $TRYTON_IMAGE
+	    ;;
+	*)
+	    echo "Usage:"
+	    echo "  $0 build"
+	    echo "  $0 create"
+	    ;;
+    esac
+}
