@@ -29,7 +29,7 @@ drun(){
 		echo "-- Started Postgres container"
 	    else
 		run $DOCKER run --name $POSTGRES_CONTAINER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
-		    -e POSTGRES_USER=POSTGRES_USER -d $POSTGRES_IMAGE
+		    -e POSTGRES_USER=$POSTGRES_USER -d $POSTGRES_IMAGE
 		echo "-- Created Postgres container"
 	    fi
 
@@ -45,7 +45,7 @@ drun(){
 	install_argentina_modules)
 	    $0 start
 	    run $DOCKER exec $TRYTON_CONTAINER \
-		pip install --src $TRYTON_DOCKER_DIR/modules -r $TRYTON_DOCKER_DIR/argentina-modules.txt
+		pip install --verbose --src $TRYTON_DOCKER_DIR/modules -r $TRYTON_DOCKER_DIR/argentina-modules.txt
 	    ;;
 	install_my_modules)
 	    run $DOCKER exec $TRYTON_CONTAINER \
