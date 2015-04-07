@@ -18,7 +18,7 @@ drun(){
 
     case "$1" in
 	build_image)
-	    run $DOCKER build -t $TRYTON_IMAGE $TRYTON_PROJECT_DIR $@
+	    run $DOCKER build -t $TRYTON_IMAGE $TRYTON_PROJECT_DIR
 	    ;;
 
 	create)
