@@ -1,9 +1,0 @@
--e hg+https://bitbucket.org/thymbra/account_ar@e03111f#egg=trytond_account_ar
--e git+https://github.com/gcoop-libre/account_coop_ar.git#egg=trytond_account_coop_ar
--e hg+https://bitbucket.org/trytonspain/trytond-company_logo@3.2#egg=trytond_company_logo
--e git+https://github.com/tryton-ar/account_invoice_ar.git@e979c55#egg=trytond_account_invoice_ar
--e hg+https://bitbucket.org/thymbra/account_bank_ar#egg=trytond_account_bank_ar
--e hg+https://bitbucket.org/thymbra/country_ar#egg=trytond_country_ar
--e hg+https://bitbucket.org/thymbra/account_voucher_ar#egg=trytond_account_voucher_ar
--e hg+https://bitbucket.org/thymbra/account_retencion_ar#egg=trytond_account_retencion_ar
--e hg+https://bitbucket.org/thymbra/account_check_ar#egg=trytond_account_check_ar
