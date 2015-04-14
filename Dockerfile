@@ -8,8 +8,17 @@ MAINTAINER Germán Podestá <german.podesta@devecoop.com>
 RUN apt-get update && apt-get install -y --no-install-recommends \
     swig make git mercurial libreoffice-java-common unoconv ssl-cert ca-certificates
 
-RUN pip install 'trytond_sale>=3.2,<3.3'
+ADD requirements.txt ${TRYTON_DIR}
+RUN pip install -r ${TRYTON_DIR}/requirements.txt
 
-ADD trytond.conf ${TRYTON_DIR}/trytond.conf
-ADD argentina-modules.txt ${TRYTON_DIR}/argentina-modules.txt
-ADD my-modules.txt ${TRYTON_DIR}/my-modules.txt
+ADD trytond.conf ${TRYTON_DIR}
+ADD modules.json ${TRYTON_DIR}
+
+RUN pip install vcstools
+
+ADD get_modules.py ${TRYTON_DIR}
+
+ADD docker-entrypoint.sh /
+
+CMD ["trytond", "-v"]
+ENTRYPOINT ["/docker-entrypoint.sh"]

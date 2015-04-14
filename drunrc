@@ -38,14 +38,13 @@ drun(){
 		--link $POSTGRES_CONTAINER:$POSTGRES_SERVER_URL \
 		-v $TRYTON_MODULES_DIR:$TRYTON_DOCKER_MODULES_DIR \
 		-v $TRYTON_PROJECT_DIR/trytond.conf:$TRYTON_DOCKER_DIR/trytond.conf \
-		-v $TRYTON_PROJECT_DIR/argentina-modules.txt:$TRYTON_DOCKER_DIR/argentina-modules.txt \
-		-v $TRYTON_PROJECT_DIR/my-modules.txt:$TRYTON_DOCKER_DIR/my-modules.txt \
+		-v $TRYTON_PROJECT_DIR/modules.json:$TRYTON_DOCKER_DIR/modules.json \
 		-d $TRYTON_IMAGE
 	    ;;
-	install_argentina_modules)
+	install_modules)
 	    $0 start
 	    run $DOCKER exec $TRYTON_CONTAINER \
-		pip install --verbose --src $TRYTON_DOCKER_DIR/modules -r $TRYTON_DOCKER_DIR/argentina-modules.txt
+		${TRYTON_DOCKER_DIR}/get_modules.py
 	    ;;
 	install_my_modules)
 	    run $DOCKER exec $TRYTON_CONTAINER \
@@ -68,8 +67,7 @@ drun(){
 	    echo "  $0 create"
 	    echo "  $0 start"
 	    echo "  $0 stop"
-	    echo "  $0 install_argentina_modules"
-	    echo "  $0 install_my_modules"
+	    echo "  $0 install_modules"
 	    ;;
     esac
 }

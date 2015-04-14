@@ -1,0 +1,8 @@
+trytond-account==3.2.4
+trytond-account-invoice==3.2.3
+trytond-account-product==3.2.1
+trytond-company==3.2.1
+trytond-country==3.2.1
+trytond-currency==3.2.1
+trytond-party==3.2.1
+trytond-product==3.2.1
