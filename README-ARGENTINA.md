@@ -4,6 +4,7 @@
 
 ## Clonar el repo
 
+	$ sudo apt-get i
     $ git clone https://github.com/Devecoop/docker-tryton.git
 
 ## Build de las imágenes base de docker
@@ -21,9 +22,9 @@ las heredadas.
 
     $ cd docker-tryton
 	$ git checkout 3.2
-	$ docker build -t devecoop/tryton-base:3.2 .
+	$ sudo docker build -t devecoop/tryton-base:3.2 .
 	$ git checkout postgres-3.2
-	$ docker build -t devecoop/tryton-postgres:3.2
+	$ sudo docker build -t devecoop/tryton-postgres:3.2
 
 
 ## Localización Argentina
@@ -37,3 +38,13 @@ Acá agregué unos scripts para facilitar la instalación.
 	$ drun install_modules
 	$ drun stop
 	$ drun start # Resetear para que tome los módulos.
+
+
+## Instalación del cliente.
+
+La versión oficial del cliente tenía un bug que hacía que no arracara,
+por lo menos en ubuntu 14.04, por eso recomendamos instalarlo de la
+siguiente forma para solucionarlo.
+
+	$ sudo apt-get install python-pip
+	$ sudo pip install git+https://github.com/Devecoop/tryton.git@3.2#egg=tryton
