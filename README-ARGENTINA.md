@@ -48,3 +48,12 @@ siguiente forma para solucionarlo.
 
 	$ sudo apt-get install python-pip
 	$ sudo pip install git+https://github.com/Devecoop/tryton.git@3.2#egg=tryton
+
+
+## Arrancando el servidor
+
+Después para arrancar el servidor (luego de reseteada la computadora):
+
+	$ cd carpeta_de_proyecto
+	$ source drunrc
+	$ drun start
