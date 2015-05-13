@@ -24,7 +24,7 @@ las heredadas.
 	$ git checkout 3.2
 	$ sudo docker build -t devecoop/tryton-base:3.2 .
 	$ git checkout postgres-3.2
-	$ sudo docker build -t devecoop/tryton-postgres:3.2
+	$ sudo docker build -t devecoop/tryton-postgres:3.2 .
 
 
 ## Localización Argentina
