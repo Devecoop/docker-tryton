@@ -15,13 +15,13 @@ ENV TRYTON_DIR /opt/tryton/
 # Install setuptools to install pip
 RUN apt-get update && \
     apt-get -y -q --no-install-recommends \
-    install python-setuptools python-lxml unoconv mercurial
+     install python-setuptools python-lxml unoconv mercurial python-dev libpq-dev build-essential
 
-# setuptools sucks! install pip
 RUN easy_install pip
 
-RUN mkdir -p ${TRYTON_DIR}
+RUN pip install psycopg2
 
+ RUN mkdir -p ${TRYTON_DIR}
 # Install latest trytond in 3.2.x series
 RUN pip install --src ${TRYTON_DIR} -e "hg+http://hg.tryton.org/trytond/@3.2#egg=trytond"
 
