@@ -4,10 +4,13 @@ MAINTAINER Germán M. Podestá <german.podesta@devecoop.com>
 ENV TRYTON_VERSION 3.4
 ENV TRYTON_DIR /opt/tryton/
 
-RUN pip install mercurial psycopg2
+RUN pip install mercurial hgnested psycopg2
 
 RUN mkdir -p ${TRYTON_DIR}
-RUN pip install --src ${TRYTON_DIR} -e "hg+http://hg.tryton.org/trytond/@$TRYTON_VERSION#egg=trytond"
+WORKDIR ${TRYTON_DIR}
+
+RUN hg clone -u $TRYTON_VERSION -r 0 -b $TRYTON_VERSION http://hg.tryton.org/trytond
+RUN pip install -e ${TRYTON_DIR}/trytond
 
 # Copy trytond.conf from local folder to /etc/trytond.conf
 ADD trytond.conf ${TRYTON_DIR}/trytond.conf
