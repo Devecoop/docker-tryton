@@ -1,8 +1,8 @@
-#!/bin/bash -x
+#!/bin/bash
 
 REPO_USER="devecoop"
 IMAGE_NAME="tryton"
-CONTEXT_DIRS="3.2"
+CONTEXT_DIRS="3.2 3.4"
 
 DOCKER_BIN=docker
 
