@@ -7,7 +7,8 @@ ENV TRYTON_DIR /opt/tryton/
 WORKDIR ${TRYTON_DIR}
 
 RUN apt-get update && \
-    apt-get install libldap2-dev libsasl2-dev
+    apt-get install --no-install-recommends -y -q \
+    libldap2-dev libsasl2-dev
 
 RUN pip install mercurial hgnested
 
