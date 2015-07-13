@@ -4,12 +4,23 @@ MAINTAINER Germán M. Podestá <german.podesta@devecoop.com>
 ENV TRYTON_VERSION 3.4
 ENV TRYTON_DIR /opt/tryton/
 
-RUN pip install mercurial hgnested psycopg2
-
-RUN mkdir -p ${TRYTON_DIR}
 WORKDIR ${TRYTON_DIR}
 
-RUN hg clone -u $TRYTON_VERSION -r 0 -b $TRYTON_VERSION http://hg.tryton.org/trytond
+RUN apt-get update && \
+    apt-get install libldap2-dev libsasl2-dev
+
+RUN pip install mercurial hgnested
+
+ADD requirements.txt ${TRYTON_DIR}
+RUN pip install -r ${TRYTON_DIR}/requirements.txt
+
+RUN mkdir -p ${TRYTON_DIR}
+
+RUN echo "[extensions]" > /root/.hgrc && \
+    echo "hgnested =" >> /root/.hgrc
+RUN hg nclone http://hg.tryton.org/${TRYTON_VERSION}/trytond
+RUN cd ${TRYTON_DIR}/trytond && \
+    hg nupdate ${TRYTON_VERSION}
 RUN pip install -e ${TRYTON_DIR}/trytond
 
 # Copy trytond.conf from local folder to /etc/trytond.conf
